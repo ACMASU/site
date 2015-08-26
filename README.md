@@ -1,1 +1,1 @@
-This is the official Armstrong ACM student chapter web-app development repo.
+This is the official Armstrong ACM student chapter web-app development repo. YAY!
