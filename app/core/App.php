@@ -3,18 +3,20 @@
 class App
 {
 
-    protected $controller = 'Home';
+    protected $controller = 'HomeController';
 
     protected $method = 'index';
 
     protected $params = [];
 
+    protected $view = ['view' => 'home/index', 'data' => []];
+
     public function __construct()
     {
         $url = $this->parseURL();
 
-        if (file_exists('../app/controllers/' . $url[0] . '.php')) {
-            $this->controller = $url[0];
+        if (file_exists('../app/controllers/' . $url[0] . 'Controller.php')) {
+            $this->controller = $url[0] . 'Controller';
             unset($url[0]);
         }
 
@@ -31,7 +33,13 @@ class App
 
         $this->params = $url ? array_values($url) : [];
 
-        call_user_func_array([$this->controller, $this->method], $this->params);
+        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $this->params['post'] = $_POST;
+            $this->view = call_user_func([$this->controller, $this->method], $this->params);
+        } else {
+            $this->view = call_user_func_array([$this->controller, $this->method], $this->params);
+        }
+
 
     }
 
@@ -44,6 +52,10 @@ class App
         }
 
         return $url;
+    }
+
+    public function render(){
+        $this->controller->view($this->view['view'], $this->view['data']);
     }
 
 }
