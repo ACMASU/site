@@ -1,2 +1,6 @@
 .DS_STORE
 .vagrant
+Vagrantfile
+provision.sh
+.idea
+.gitignore
