@@ -4,3 +4,5 @@ Vagrantfile
 provision.sh
 .idea
 .gitignore
+
+database/acm_database.litedb
